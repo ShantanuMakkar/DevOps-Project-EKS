@@ -1,7 +1,7 @@
 env                   = "dev"
 aws-region            = "us-east-1"
 vpc-cidr-block        = "172.31.0.0/16"
-vpc-name              = "Default VPC"
+vpc-name              = "vpc"
 igw-name              = "igw"
 pub-subnet-count      = 3
 pub-cidr-block        = ["172.31.0.0/20", "172.31.80.0/20", "172.31.32.0/20"]
