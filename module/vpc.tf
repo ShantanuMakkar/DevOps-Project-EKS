@@ -114,7 +114,7 @@ resource "aws_route_table" "private-rt" {
     nat_gateway_id = aws_nat_gateway.ngw.id
   }
   route {
-    cidr_block                = "172.31.0.0/0"          // Doing VPC Peering between EKS 10 network and my 172 network
+    cidr_block                = "172.31.0.0/16"          // Doing VPC Peering between EKS 10 network and my 172 network
     vpc_peering_connection_id = var.peering_connection_id
   }
 
