@@ -25,6 +25,7 @@ variable "private-rt-name" {}
 variable "eip-name" {}
 variable "ngw-name" {}
 variable "eks-sg" {}
+variable "peering_connection_id" {}
 
 
 # EKS

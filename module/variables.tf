@@ -52,3 +52,4 @@ variable "max_capacity_on_demand" {}
 variable "desired_capacity_spot" {}
 variable "min_capacity_spot" {}
 variable "max_capacity_spot" {}
+variable "peering_connection_id" {}

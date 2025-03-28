@@ -16,6 +16,7 @@ private-rt-name       = "private-route-table"
 eip-name              = "elasticip-ngw"
 ngw-name              = "ngw"
 eks-sg                = "eks-sg"
+peering_connection_id = "pcx-0811e4ca4cac227b8"
 
 # EKS
 is-eks-cluster-enabled     = true

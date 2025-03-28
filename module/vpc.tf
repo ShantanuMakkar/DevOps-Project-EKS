@@ -11,7 +11,6 @@ resource "aws_vpc" "vpc" {
   tags = {
     Name = var.vpc-name
     Env  = var.env
-
   }
 }
 
@@ -41,8 +40,7 @@ resource "aws_subnet" "public-subnet" {
     "kubernetes.io/role/elb"                      = "1"
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_subnet" "private-subnet" {
@@ -59,8 +57,7 @@ resource "aws_subnet" "private-subnet" {
     "kubernetes.io/role/internal-elb"             = "1"
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+  depends_on = [aws_vpc.vpc]
 }
 
 
@@ -77,8 +74,7 @@ resource "aws_route_table" "public-rt" {
     env  = var.env
   }
 
-  depends_on = [aws_vpc.vpc
-  ]
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_route_table_association" "name" {
@@ -86,9 +82,7 @@ resource "aws_route_table_association" "name" {
   route_table_id = aws_route_table.public-rt.id
   subnet_id      = aws_subnet.public-subnet[count.index].id
 
-  depends_on = [aws_vpc.vpc,
-    aws_subnet.public-subnet
-  ]
+  depends_on = [aws_vpc.vpc, aws_subnet.public-subnet]
 }
 
 resource "aws_eip" "ngw-eip" {
@@ -98,9 +92,7 @@ resource "aws_eip" "ngw-eip" {
     Name = var.eip-name
   }
 
-  depends_on = [aws_vpc.vpc
-  ]
-
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_nat_gateway" "ngw" {
@@ -111,9 +103,7 @@ resource "aws_nat_gateway" "ngw" {
     Name = var.ngw-name
   }
 
-  depends_on = [aws_vpc.vpc,
-    aws_eip.ngw-eip
-  ]
+  depends_on = [aws_vpc.vpc, aws_eip.ngw-eip]
 }
 
 resource "aws_route_table" "private-rt" {
@@ -123,14 +113,17 @@ resource "aws_route_table" "private-rt" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.ngw.id
   }
+  route {
+    cidr_block                = "172.31.0.0/0"          // Doing VPC Peering between EKS 10 network and my 172 network
+    vpc_peering_connection_id = var.peering_connection_id
+  }
 
   tags = {
     Name = var.private-rt-name
     env  = var.env
   }
 
-  depends_on = [aws_vpc.vpc,
-  ]
+  depends_on = [aws_vpc.vpc]
 }
 
 resource "aws_route_table_association" "private-rt-association" {
@@ -138,9 +131,7 @@ resource "aws_route_table_association" "private-rt-association" {
   route_table_id = aws_route_table.private-rt.id
   subnet_id      = aws_subnet.private-subnet[count.index].id
 
-  depends_on = [aws_vpc.vpc,
-    aws_subnet.private-subnet
-  ]
+  depends_on = [aws_vpc.vpc, aws_subnet.private-subnet]
 }
 
 resource "aws_security_group" "eks-cluster-sg" {

@@ -24,6 +24,7 @@ module "eks" {
   eip-name              = "${local.env}-${local.org}-${var.eip-name}"
   ngw-name              = "${local.env}-${local.org}-${var.ngw-name}"
   eks-sg                = var.eks-sg
+  peering_connection_id = var.peering_connection_id
 
   is_eks_role_enabled           = true
   is_eks_nodegroup_role_enabled = true
