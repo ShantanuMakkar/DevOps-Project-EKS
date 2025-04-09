@@ -30,7 +30,7 @@ pipeline {
         stage('Git Pulling') {
             steps {
                 sh 'echo preparing to pull the git repo..'
-                git branch: 'master', url: 'https://github.com/ShantanuMakkar/DevOps-Project-EKS.git'
+                git branch: 'main', url: 'https://github.com/ShantanuMakkar/DevOps-Project-EKS.git'
             }
         }
 
