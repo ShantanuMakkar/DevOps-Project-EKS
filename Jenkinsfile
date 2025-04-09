@@ -73,6 +73,7 @@ pipeline {
                             sh "terraform -chdir=eks/ destroy -var-file=${params.Environment}.tfvars -auto-approve"
                         } 
                         else {
+                            sh "echo Invalid.."
                             error "Invalid value for Terraform_Action: ${params.Terraform_Action}"
                         }
                     }
