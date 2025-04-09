@@ -6,12 +6,19 @@ properties([
         ),
         choice(
             choices: ['plan', 'apply', 'destroy'], 
-            name: 'Terraform_Action'
-        )])
+            name: 'Terraform_Action',
+            description: 'Select the Terraform operation to perform (default is apply)'
+        )
+    ])
 ])
 
 pipeline {
     agent any
+
+    triggers {
+        githubPush()
+    }
+    
     stages {
 
         stage('Preparing') {
