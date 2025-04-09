@@ -69,7 +69,7 @@ pipeline {
                             sh "terraform -chdir=eks/ apply -var-file=${params.Environment}.tfvars -auto-approve"
                         }   
                         else if (params.Terraform_Action == 'destroy') {
-                            sh 'echo starting terraform destroy..'
+                            sh '⚠️⚠️ WARNING: You are about to DESTROY infrastructure! Proceeding...'
                             sh "terraform -chdir=eks/ destroy -var-file=${params.Environment}.tfvars -auto-approve"
                         } 
                         else {
